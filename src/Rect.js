@@ -17,12 +17,12 @@ class Rect extends Component {
     this.color = props.c
     this.radius = props.r
     this.style = {
-      backgroundColor: this.color
-      position: "absolute"
-      left: this.x + "px"
-      top: this.y + "px"
-      width: this.width + "px"
-      height: this.height + "px"
+      backgroundColor: this.color,
+      position: "absolute",
+      left: this.x + "px",
+      top: this.y + "px",
+      width: this.width + "px",
+      height: this.height + "px",
       borderRadius: this.radius + "px"
     }
   }
