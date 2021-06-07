@@ -1,23 +1,21 @@
 import { Component } from 'react';
 import './App.css';
-import Rect from './Rect';
 
 class App extends Component {
   constructor(props) {
-    super()
-    this.title = props.title
-    this.message = props.message
+    super(props);
+    this.state = {
+      msg: 'Hello Component.',
+    }
   }
 
   render() {
     return <div>
       <h1 className="bg-primary text-white display-4">React</h1>
       <div className="container">
-        <p className="subtitle">{this.title}</p>
-        <p>これはサンプルのコンポーネントです。</p>
-        <p className="subtitle">draw rectangle.</p>
-        <Rect x="200" y="300" w="200" h="200" c="#6ff9" r="25" />
-        <p>{this.message}</p>
+        <p className="subtitle">Show message.</p>
+        <p className="alert alert-warning">{this.state.msg}</p>
+        <p className="alert alert-dark">{this.props.msg}</p>
       </div>
     </div>
   }
