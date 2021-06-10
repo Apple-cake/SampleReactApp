@@ -1,3 +1,9 @@
+# Reactを学習するためのアプリケーション
+コンポーネント、ステート、フックなどの基本的な要素および
+Next.jsライブラリ、Firebaseの理解を目的とする。
+
+また、並行してGithubのツールも色々触ってみる。
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
