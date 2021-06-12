@@ -3,56 +3,44 @@ import './App.css';
 
 class App extends Component {
 
-  data = []
-
-  area = {
-    width: "500px",
-    height: "500px",
-    border: "1px solid blue"
-  }
+  input = ''
 
   constructor(props) {
     super(props);
     this.state = {
-      counter: 0,
-      msg: 'count start!',
-      flag: true,
+      title: 'input form',
+      message: 'type your name!'
     }
     // イベントの初期化
-    this.doAction = this.doAction.bind(this)
+    this.doChange = this.doChange.bind(this)
+    this.doSubmit = this.doSubmit.bind(this)
   }
 
-  doAction(e) {
-    // クリックした位置情報（ページ左上からの距離）
-    let x = e.pageX
-    let y = e.pageY
-    // dataにpushで位置情報を追加
-    this.data.push({x:x, y:y})
-    // dataプロパティをlistに設定
+  doChange(e) {
+    this.input = e.target.value;
+  }
+
+  doSubmit(e) {
     this.setState({
-      list: this.data
+      title: 'send form',
+      message: 'Hello, ' + this.input + '!!'
     })
-  }
-
-  draw(d) {
-    let s = {
-      position: "absolute",
-        left: (d.x - 25) + "px",
-        top: (d.y - 25) + "px",
-        width: "50px",
-        height: "50px",
-        backgroundColor: "#66f3",
-    }
-    return <div style= {s}></div>
   }
 
   render() {
     return <div>
       <h1 className="bg-primary text-white display-4">React</h1>
       <div className="container">
-        <p className="subtitle">draw rectangle.</p>
-        <div style={this.area} onClick={this.doAction}>
-          {this.data.map((value) => this.draw(value))}
+        <h4>{this.state.title}</h4>
+        <p className="card h5 p-3">{this.state.message}</p>
+        <div className="alert alert-primary mt-3">
+          <form onSubmit={this.doSubmit}>
+            <div className="form-group">
+              <label>Message:</label>
+              <input type="text" className="form-control" onChange={this.doChange} />
+            </div>
+            <input type="submit" className="btn btn-primary" value="Click" />
+          </form>
         </div>
       </div>
     </div>
