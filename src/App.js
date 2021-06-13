@@ -9,24 +9,15 @@ class App extends Component {
     super(props);
     this.state = {
       title: 'input form',
-      message: 'type your name!'
+      message: 'type your name!',
+      max: 10
     }
     // イベントの初期化
-    this.doChange = this.doChange.bind(this)
-    this.doSubmit = this.doSubmit.bind(this)
+    this.doCheck = this.doCheck.bind(this)
   }
 
-  doChange(e) {
-    this.input = e.target.value;
-  }
-
-  doSubmit(e) {
-    this.setState({
-      title: 'send form',
-      message: 'Hello, ' + this.input + '!!'
-    })
-    // イベントの消費（フォーム送信をなくす=inputの初期化を防止）
-    e.preventDefault()
+  doCheck(e) {
+    alert(e.target.value + "は長すぎます。（最大" + this.state.max + "文字）")
   }
 
   render() {
@@ -35,18 +26,36 @@ class App extends Component {
       <div className="container">
         <h4>{this.state.title}</h4>
         <p className="card h5 p-3">{this.state.message}</p>
-        <div className="alert alert-primary mt-3">
-          <form onSubmit={this.doSubmit}>
-            <div className="form-group">
-              <label>Message: 名前を2〜10文字で入力してください。</label>
-              <input type="text" className="form-control" onChange={this.doChange} required pattern="[A-Za-z0-9]+" minLength="2" maxLength="10"/>
-            </div>
-            <input type="submit" className="btn btn-primary" value="Click" />
-          </form>
-        </div>
+        <Message maxlength={this.state.max} onCheck={this.doCheck} />
       </div>
     </div>
   }
 }
 
+class Message extends Component {
+  li = {
+    fontSize: "14px",
+    fontWeight: "bold",
+    color: "#090"
+  }
+
+  constructor(props) {
+    super(props)
+    this.doChange = this.doChange.bind(this)
+  }
+
+  doChange(e) {
+    if (e.target.value.length > this.props.maxlength) {
+      this.props.onCheck(e)
+      e.target.value = e.target.value.substr(0, this.props.maxlength)
+    }
+  }
+
+  render() {
+    return <div className="form-group">
+      <label>input:</label>
+      <input type="text" className="form-control" onChange={this.doChange}/>
+    </div>
+  }
+}
 export default App;
