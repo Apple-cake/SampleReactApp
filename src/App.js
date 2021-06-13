@@ -25,6 +25,8 @@ class App extends Component {
       title: 'send form',
       message: 'Hello, ' + this.input + '!!'
     })
+    // イベントの消費（フォーム送信をなくす=inputの初期化を防止）
+    e.preventDefault()
   }
 
   render() {
@@ -36,8 +38,8 @@ class App extends Component {
         <div className="alert alert-primary mt-3">
           <form onSubmit={this.doSubmit}>
             <div className="form-group">
-              <label>Message:</label>
-              <input type="text" className="form-control" onChange={this.doChange} />
+              <label>Message: 名前を2〜10文字で入力してください。</label>
+              <input type="text" className="form-control" onChange={this.doChange} required pattern="[A-Za-z0-9]+" minLength="2" maxLength="10"/>
             </div>
             <input type="submit" className="btn btn-primary" value="Click" />
           </form>
