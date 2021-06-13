@@ -3,60 +3,59 @@ import './App.css';
 
 class App extends Component {
 
-  data = []
-
-  area = {
-    width: "500px",
-    height: "500px",
-    border: "1px solid blue"
-  }
+  input = ''
 
   constructor(props) {
     super(props);
     this.state = {
-      counter: 0,
-      msg: 'count start!',
-      flag: true,
+      title: 'input form',
+      message: 'type your name!',
+      max: 10
     }
     // イベントの初期化
-    this.doAction = this.doAction.bind(this)
+    this.doCheck = this.doCheck.bind(this)
   }
 
-  doAction(e) {
-    // クリックした位置情報（ページ左上からの距離）
-    let x = e.pageX
-    let y = e.pageY
-    // dataにpushで位置情報を追加
-    this.data.push({x:x, y:y})
-    // dataプロパティをlistに設定
-    this.setState({
-      list: this.data
-    })
-  }
-
-  draw(d) {
-    let s = {
-      position: "absolute",
-        left: (d.x - 25) + "px",
-        top: (d.y - 25) + "px",
-        width: "50px",
-        height: "50px",
-        backgroundColor: "#66f3",
-    }
-    return <div style= {s}></div>
+  doCheck(e) {
+    alert(e.target.value + "は長すぎます。（最大" + this.state.max + "文字）")
   }
 
   render() {
     return <div>
       <h1 className="bg-primary text-white display-4">React</h1>
       <div className="container">
-        <p className="subtitle">draw rectangle.</p>
-        <div style={this.area} onClick={this.doAction}>
-          {this.data.map((value) => this.draw(value))}
-        </div>
+        <h4>{this.state.title}</h4>
+        <p className="card h5 p-3">{this.state.message}</p>
+        <Message maxlength={this.state.max} onCheck={this.doCheck} />
       </div>
     </div>
   }
 }
 
+class Message extends Component {
+  li = {
+    fontSize: "14px",
+    fontWeight: "bold",
+    color: "#090"
+  }
+
+  constructor(props) {
+    super(props)
+    this.doChange = this.doChange.bind(this)
+  }
+
+  doChange(e) {
+    if (e.target.value.length > this.props.maxlength) {
+      this.props.onCheck(e)
+      e.target.value = e.target.value.substr(0, this.props.maxlength)
+    }
+  }
+
+  render() {
+    return <div className="form-group">
+      <label>input:</label>
+      <input type="text" className="form-control" onChange={this.doChange}/>
+    </div>
+  }
+}
 export default App;
